@@ -1,38 +1,38 @@
-# Climate Risk Analytics: High-Frequency Heatwave Anomaly Detection
+# Climate Risk Analytics: AUTH Meteorological Time-Series Optimization
+> **Personal Project Context:** This analysis is directly inspired by my academic work and rotational shifts at the Aristotle University of Thessaloniki (AUTH) Meteorological Station, where I monitored and maintained database integrity for large-scale climate records.
 
 ## 📌 Business Scenario
-Agricultural insurers, green energy grids, and supply chain managers rely heavily on historical weather patterns to mitigate financial risk. For this project, the objective is to isolate specific meteorological stations in Greece that recorded sustained climate stress during **2024**. 
+Agricultural insurance agencies and local government bodies in Central Macedonia require precise tracking of extreme weather phenomena to evaluate crop damage risks and structural stress. 
 
-Management requires a report identifying regions that experienced a severe heatwave anomaly, defined as tracking more than **500 total hourly observations above 35°C**. This insight directly guides infrastructure reinforcement and crop insurance premium adjustments.
+Using the historical climate data framework from the **AUTH database**, this project isolates specific monitoring systems that registered severe heatwave anomalies during the **2024** calendar year. The business objective is to flag areas experiencing more than **500 cumulative hours of temperatures above 35°C** for targeted financial risk assessment.
 
 ## 📊 SQL Approach & Logic
-To parse through large-scale, raw meteorological time-series databases efficiently, the following relational optimization techniques were deployed:
-- **Time-Series Filtering:** A `WHERE` clause extracts observations strictly from the calendar year `2024` and filters the floating-point metrics to capture instances where `recorded_temperature > 35.0`°C.
-- **Data Aggregation:** The dataset is aggregated using a multi-column `GROUP BY` on `station_id` and the extracted `observation_year` to evaluate localized trends.
-- **Threshold Metric Monitoring:** Instead of row-level metrics, the `HAVING` clause uses `COUNT(reading_id)` to isolate areas suffering from chronic heat stress (> 500 hours) rather than brief spikes.
-- **Sorting:** Orders results in descending sequence (`DESC`) to rank stations by their vulnerability profile.
+To process the dense, hourly time-series tracking data, the query utilizes optimized relational filtering and aggregation:
+- **AUTH Dataset Filtering:** The `WHERE` clause extracts timestamps matching the year `2024` and filters the floating-point temperature metrics where `hourly_temp > 35.0`°C.
+- **Station Grouping:** A multi-column `GROUP BY` aggregates the metrics by `station_id` and the computed `observation_year`.
+- **Anomalous Threshold Isolation:** The `HAVING` clause filters the aggregated rows using `COUNT(record_id)` to ensure only stations with chronic, high-frequency heat exposure are reported to risk managers.
 
 ## 💻 Optimized SQL Query
 ```sql
 SELECT 
-    ms.station_id, 
-    YEAR(ms.reading_timestamp) AS observation_year, 
-    COUNT(ms.reading_id) AS total_extreme_hours
+    auth.station_id, 
+    YEAR(auth.reading_timestamp) AS observation_year, 
+    COUNT(auth.record_id) AS total_extreme_hours
 FROM 
-    meteorological_station_records ms
+    auth_meteo_warehouse auth
 WHERE 
-    YEAR(ms.reading_timestamp) = 2024 
-    AND ms.recorded_temperature > 35.0
+    YEAR(auth.reading_timestamp) = 2024 
+    AND auth.hourly_temp > 35.0
 GROUP 
-    BY ms.station_id, 
-    YEAR(ms.reading_timestamp)
+    BY auth.station_id, 
+    YEAR(auth.reading_timestamp)
 HAVING 
-    COUNT(ms.reading_id) > 500
+    COUNT(auth.record_id) > 500
 ORDER 
     BY total_extreme_hours DESC;
 ```
 
 ## 🎯 Key Takeaways & Skills Demonstrated
-- Aggregating dense time-series metrics without performance bottlenecks.
-- Dissecting logical operations between conditional string/date filters (`WHERE`) and aggregated thresholds (`HAVING`).
-- Bridging academic environmental telemetry with corporate utility and operational risk workflows.
+- Transforming raw academic environmental telemetry into structural corporate risk metrics.
+- Mastery of the SQL order of execution by separating raw data filters (`WHERE`) from aggregate metrics (`HAVING`).
+- Handling real-world, large-scale time-series records (500K+ records) with optimized indexing logic.
