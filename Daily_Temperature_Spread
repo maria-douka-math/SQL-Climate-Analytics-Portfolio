@@ -1,0 +1,35 @@
+# Climate Risk Analytics: Daily Temperature Variance Monitoring (MySQL)
+> **Portfolio Project Context:** This project highlights my ability to construct data aggregation models that isolate extreme daily environmental fluctuations using multi-table relational joins and aggregate filtering.
+
+## 📌 Business Scenario
+Agricultural cooperatives and micro-climate researchers monitor daily temperature variance to protect crop yields and predict frost or heat stress. A sudden, massive shift in temperature within a 24-hour window can ruin specific crops. 
+
+The objective of this project is to analyze historical sensor data from **2025** across all **currently operational stations** to isolate instances where the absolute daily temperature spread (Maximum Temperature minus Minimum Temperature) exceeded a critical threshold of **15°C**. This report allows agronomic analysts to map regional climate volatility.
+
+## 📊 SQL Approach & Logic
+To successfully compute daily delta metrics across a dense hourly time-series dataset, the query executes the following programmatic phases:
+- **Relational Integrity (`JOIN`):** An `INNER JOIN` connects the asset catalog (`weather_stations`) with the high-frequency telemetry logs (`hourly_sensor_logs`) on the shared `station_id` primary/foreign key relationship.
+- **Row-Level Pre-Filtering (`WHERE`):** The operational footprint is optimized by restricting data to active installations (`is_operational = TRUE`) and isolating the calendar year `2025` using the MySQL `YEAR()` function.
+- **Dual-Axis Aggregation (`GROUP BY`):** Data is aggregated simultaneously by `station_name` and `reading_date` to ensure metrics are calculated uniquely per station, per day.
+- **Mathematical Variance Formulation:** The absolute daily spread is computed using `ABS(MAX() - MIN())`. This guarantees a positive floating-point variance profile for reporting.
+- **Post-Aggregation Filtering (`HAVING`):** The aggregate metric alias is filtered using a `HAVING` clause to suppress steady weather days and preserve only high-volatility events (> 15°C).
+
+## 💻 Optimized MySQL Query
+```sql
+SELECT st.station_name,
+       logs.reading_date,
+       ABS(MAX(logs.recorded_temperature_celsius)-MIN(logs.recorded_temperature_celsius)) AS daily_temperature_spread
+FROM weather_stations st
+       JOIN
+     hourly_sensor_logs logs
+ON st.station_id=logs.station_id
+WHERE YEAR(logs.reading_date)=2025 AND st.is_operational=TRUE
+GROUP BY st.station_name, logs.reading_date 
+HAVING daily_temperature_spread>15
+ORDER BY daily_temperature_spread DESC;
+```
+
+## 🎯 Key Takeaways & Skills Demonstrated
+- Mastery of the logical query processing order by correctly separating row filters (`WHERE`) from aggregate filters (`HAVING`).
+- Application of mathematical functions (`ABS`) to continuous environmental time-series arrays.
+- Delivering clean, ordered analytics outputs directly aligned with agro-business safety metrics.
