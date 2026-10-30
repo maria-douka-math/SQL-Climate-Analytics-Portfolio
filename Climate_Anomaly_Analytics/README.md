@@ -2,13 +2,13 @@
 
 > **Portfolio Project Context:** This project highlights my ability to construct clean, modular data pipelines using sequential Common Table Expressions (CTEs) and advanced window functions to extract chronological patterns and localized anomalies from raw environmental datasets. 
 
-### 📌 Business Scenario
+## 📌 Business Scenario
 
 AgTech insurance underwriters and sustainability funds require high-fidelity automated pipelines to detect sudden, severe micro-climate anomalies. A critical risk metric for premium adjustments is the **Precipitation Acceleration Event (PAE)**. A PAE is defined as a specific day where a weather station records rainfall that drastically exceeds the localized historical regional monthly baseline, while compounding an aggressive day-over-day accelerating trend. 
 
 The objective of this project is to build an optimized, multi-stage aggregation data pipeline in MySQL. The script ingests raw daily weather logs, computes rolling spatial-temporal benchmarks, and isolates high-risk accelerating anomalies for corporate asset tracking. 
 
-### 📊 SQL Approach & Logic
+## 📊 SQL Approach & Logic
 
 To successfully compute valid annual risk metrics across an unstructured legacy dataset, the query executes the following programmatic phases: 
 
@@ -17,7 +17,7 @@ To successfully compute valid annual risk metrics across an unstructured legacy 
 * **Time-Series Lag Navigation (LAG() OVER):** Traverses chronological daily records partitioned strictly per individual weather station (station_id) to isolate the prior day's precipitation, demonstrating time-series data wrangling capabilities.
 * **Multi-Condition Risk Filtering (WHERE):** The final outer query isolates specific climate records that fulfill both corporate risk metrics: current day's rainfall is **more than twice (2x)** the calculated regional monthly average, and simultaneously represents an accelerating trend of **at least 50% higher** (>= 1.5 * prev_day_precipitation) compared to the previous day.
 
-### 💻 Optimized MySQL Query
+## 💻 Optimized MySQL Query
 
 sql
 
@@ -53,7 +53,7 @@ ORDER BY log_date ASC, station_id ASC;
 
 Use code with caution.
 
-### 🎯 Key Takeaways & Skills Demonstrated
+## 🎯 Key Takeaways & Skills Demonstrated
 
 * Advanced execution of sequential transformation steps to separate raw database ingestion from analytical evaluation layers.
 * Expertise in advanced window layout design, replacing expensive table self-joins with a high-performance single table scan architecture.
