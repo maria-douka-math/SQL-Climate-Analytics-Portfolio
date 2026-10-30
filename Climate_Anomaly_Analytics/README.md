@@ -19,7 +19,7 @@ To successfully compute valid annual risk metrics across an unstructured legacy 
 
 ## 💻 Optimized MySQL Query
 
-sql
+```sql
 
 WITH time_and_regional_metrics AS (
     SELECT 
@@ -50,11 +50,11 @@ FROM time_and_regional_metrics
 WHERE daily_precipitation > 2 * regional_monthly_avg
   AND daily_precipitation >= 1.5 * prev_day_precipitation
 ORDER BY log_date ASC, station_id ASC;
+```
 
-Use code with caution.
 
 ## 🎯 Key Takeaways & Skills Demonstrated
 
-* Advanced execution of sequential transformation steps to separate raw database ingestion from analytical evaluation layers.
-* Expertise in advanced window layout design, replacing expensive table self-joins with a high-performance single table scan architecture.
-* Full mastery of cross-row analytical traversal functions (LAG) for micro-climate time-series modeling.
+- Advanced execution of sequential transformation steps to separate raw database ingestion from analytical evaluation layers.
+-  Expertise in advanced window layout design, replacing expensive table self-joins with a high-performance single table scan architecture.
+- Full mastery of cross-row analytical traversal functions (LAG) for micro-climate time-series modeling.
