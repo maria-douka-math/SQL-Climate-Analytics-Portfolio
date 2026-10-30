@@ -1,6 +1,6 @@
-### Multi-Stage Climate Anomaly Analytics: Sequential CTEs & Windows (MySQL)
+# Multi-Stage Climate Anomaly Analytics: Sequential CTEs & Windows (MySQL)
 
-**Portfolio Project Context:** This project highlights my ability to construct clean, modular data pipelines using sequential Common Table Expressions (CTEs) and advanced window functions to extract chronological patterns and localized anomalies from raw environmental datasets. 
+> **Portfolio Project Context:** This project highlights my ability to construct clean, modular data pipelines using sequential Common Table Expressions (CTEs) and advanced window functions to extract chronological patterns and localized anomalies from raw environmental datasets. 
 
 ### 📌 Business Scenario
 
